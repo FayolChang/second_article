@@ -1,0 +1,575 @@
+---
+title: "Hybrid of DEA and Randomforest to predict shangshigongsi cai wu  kun jing"
+author: "Yongrui Duan, Fayou Zhang"
+date: "09/26/2014"
+output:
+  pdf_document:
+    keep_tex: yes
+    latex_engine: xelatex
+    number_sections: yes
+---
+
+
+## Abstract
+
+## introduction
+
+Business failure prediction is crutial for investors, stock holders, managers, employees and government officials, and thus has been an hot topic in academic studies. 
+
+Many technical methods have been applied to predict business failure. Amoung which are XX categories: XX, XX, XX, and XX.
+XX(author) made an thorough review on XX. 
+
+## Literature Review
+
+### Data Envelopment Aanaysis(DEA)
+
+DEA is a nonparametric method proposed by Charnes, Cooper and Rhodes in 1978. it has been applied to many fileds Because of its many advantages: it does not require any assumptions to be made about the distribution of inefficiency and it does not require a particular functional
+form on the data in determining the froniter. it is capable of being used with any input-output measurement, and capable of handling multiple inputs and outputs. The CCR model requires inputs and outputs to be positive, which may be not applied in real life. for example, profits as an output may be negative. In this paper, we will introduce a modified SBM model (Tone 2004，Düzakin,E.,Düzakin,Hatice,2007) to tackle this problem. The SBM model is as follows:
+
+
+
+
+$$
+    \begin{aligned}
+    \min & \rho=\frac{1-(1/m)\sum_{i=1}^{m}s_{i}^{-}/x_{io}}{1+(1/s)\sum_{r=1}^{s}s_{r}^{+}/y_{ro}}\\
+    \textrm{s.t.} & \mathbf{x_{o}}=\mathbf{X\lambda}+\mathbf{s^{-}}\\
+     & \mathbf{y_{o}}=\mathbf{Y\lambda}+\mathbf{s^{+}}\\
+     & \mathbf{\lambda}\geq\mathbf{0},\mathbf{s^{-}}\geq\mathbf{0},\mathbf{s^{+}}\geq\mathbf{0}
+    \end{aligned}
+$$
+
+However, this model can not handle negative output.（Tone 2004，Düzakin,E.,Düzakin,Hatice,2007）proposed an solution to this problem. Assuming $y_{ro}<0$, following transformations were applied:
+
+$$
+\begin{aligned}
+\overline{y}_{r}^{+} & =\textrm{Max}_{j=1,2,...n.}\{y_{rj}|y_{rj}>0\}\\
+\underline{y}_{r}^{-} & =\textrm{Min}_{j=1,2,...n.}\{y_{rj}|y_{rj}>0\}
+\end{aligned}
+$$
+
+The term $s_r^+/y_{ro}$ in the objective function as replaced as follows：if $y_{ro}<0$ ,and $\overline{y}_{r}^{+}>\underline{y}_{r}^{+}$,then it will be replaced with
+
+$$
+s_r^{+}/\frac{\underline{y}_{r}^{+}(\overline{y}_{r}^{+}-\underline{y}_{r}^{+})}{\overline{y}_{r}^{+}-y_{ro}}
+$$
+
+Note that the term $y_{ro}$ are not replaced in the constraint. 
+
+After transformation, all negaitve output were transformed to be positive and strictly less than $\underline{y}_{r}^{+}$ . and the more negative an output is,  the less its tranformation value.
+
+
+### Random Forest
+
+Random forest, developed by Leo Breiman(1) and Adele Cutler(2), is an ensemble learning method for classification and regression that operate by constructing a multitude of decision trees. For a given training dataset, $A = {(X_1,y_1),(X_2,y_2),\cdots,(X_n,y_n)}$,Where $X_i = 1,2,\cdots,n$, is a variable or vector and $y_i$ is its corresponding property or class label; the basic RF algorithm is presented as follows:
+
+#### Bootstrap sample. 
+
+Each training set is drawn with replacement from the original
+dataset A. Bootstrapping allows replacement, so that some of the samples will be repeated
+in the sample, while others will be “left out” of the sample. The “left out” samples
+constitute the “Out-of bag (OOB)” which has, for example, one-third, of samples in A which are used later to get a running unbiased estimate of the classification error as trees
+are added to the forest and variable imp ortance
+
+
+#### Growing trees.
+
+For each bootstrap sample, a tree is grown m variables $(m_{try})$ are
+selected at random from all n variables $(m_{try} \leq n)$ and the best split of all $(m_{try})$ is used at
+each node. Each tree is grown to the largest extent (until no further splitting is possible)
+and no pruning of the trees occurs.
+
+#### OOB error estimate. 
+
+Each tree is constructed on the bootstrap sample. The OOB
+samples are not used and therefore regarded as a test set to provide an unbiased estimate
+of the prediction accuracy. Each OOB sample is put down the constructed trees to get
+a classification. A test set classification is formed. At the end of the run, take k to be
+the class which got most of the “votes” every time sample n was OOB. The proportion of
+times that k is not the true class of n averaged over all samples is the OOB error estimate.
+
+### SVM
+
+Support vector machines(SVM) is the theory based on statistical learning theory. It realizes the theory of VC dimension and principle of structural risk minimum(SRM). The idea of SVM is to search an optimal hyper-plane :TODO:
+
+Suppose we are given a set of training data $xi \in R^n(i=1,2,…,n)$ with the desired output $yi∈{+1,-1}$ corresponding to the two classes. And suppose the dataset is linear seperable. So there exists a separating hyper plane with the target functions w·xi+b=0 (w represents the weight vector and b represents the bias). To ensure that all training data can be classified, we must make the margin of separation $(2/‖w‖)$ maximum. Then, in the case of linear separation, the linear SVM for optimal separating hyper plane has the following optimization problem.
+
+$$
+\begin{aligned}\max & \frac{2}{||w||}\\
+\text{s.t.} & y^{(i)}(w^{T}x^{(i)}+b)\geq1,i=1,\cdots,n\\
+\end{aligned}
+$$
+
+the model above can be transformed as:
+
+$$
+\begin{aligned}\min & \frac{1}{2}||w||^{2}\\
+\text{s.t.} & y^{(i)}(w^{T}x^{(i)}+b)\geq1,i=1,\cdots,n
+\end{aligned}
+$$
+
+
+
+## Results and Discussion
+
+
+### The data
+
+Our aim is to predict whether a company would experience financial failure in two years after based on the financial statement data of current year. The data are from XXXX. We collected data from 2008 to 2013 but only use  2008-2010 for prediction.  for example, we obtain data of a company in its 2010 financial statement and this company was classifed as special treatment(ST*) in 2013 for the first time. we pair the data in 2010 and the label ST in 2013 together to build our model. Once the model was built, we can predict wether a specific company will be classified as special treatment two years after.
+
+### procedure
+First, we calculate DEA efficiency of the corperations in each year,an d use the efficiency as a feature.  Second, we caluclate viarable importance through random forests. third, we build our models using the 3,5,10 most important variables. When building our models, we randmonly select 200 nonST corperatons and resample ST corperations to 200 to make two class balance. forth, we randomly divide the 400 sample into training set and testing set.
+fifth, we use the training set to train different models. sixth, we compared these models.
+
+### results
+
+The results shows that efficiency is an relatively important factor in predicting ST
+
+
+```{r loaddata,echo=FALSE}
+
+# source("./creative/load_data.R")
+#     
+# system.time(feature_data <- load_feature_data())
+# system.time(dea_data <- load_DEA_data())
+# ImplementST_data = load_ST_data()
+#CancelST_data = load_ST_data("Cancel")
+
+```
+
+
+
+```{r data_cleaning,echo=FALSE}
+# source("./creative/clean_data.r")
+# system.time(corps <- clean_data(feature_data,dea_data,ImplementST_data))
+```
+
+
+```{r add_dea_eff_feature, echo = FALSE }
+library(plyr)
+library(dplyr)
+if(!file.exists("./cache/corps_with_eff.RDS"))
+{
+    source("./creative/get_corps_with_eff.r")
+    source("./creative/sbm.gurobi.r")
+    system.time(corps_with_eff <- get_corps_with_eff(corps))
+    corps_with_eff = corps_with_eff[corps_with_eff$eff>0,]
+}else 
+    corps_with_eff = readRDS("./cache/corps_with_eff.RDS")
+
+```
+
+```{r ttest,echo=FALSE}
+
+ttests = corps_with_eff %>%
+    group_by(year) %>%
+    do(ttest = t.test(eff~Would_be_ST,data = .))
+
+#year = ttests$year
+extract_info_from_ttest = function(x)
+{
+    t = x$statistic
+    df = x$parameter
+    p.value = x$p.value
+    estimates = x$estimate
+    estimates_name = names(estimates)
+    info = data.frame(t = t,df=df,estimates[1],estimates[2],p.value=p.value)
+    names(info) = c("t","df",estimates_name,"p.value")
+    info
+    
+}
+ttest_info = lapply(X = ttests$ttest,FUN = extract_info_from_ttest)
+ttest_info = do.call(rbind,ttest_info)
+ttest_info = cbind(ttests$year,ttest_info)
+names(ttest_info)[1] = "year"
+rownames(ttest_info) = NULL
+ttest_info
+```
+
+
+
+
+
+```{r get_rdata_sample,echo = FALSE}
+#使用第三种取样的方法，取得样本
+
+#rfdata = getSamples3(corps_with_eff)
+
+```
+
+
+
+```{r feature_selecttion,echo = FALSE}
+#     if(!file.exists("./cache/feature_selection_model.RDS"))
+#     {
+#         source("./creative/select_feature.r")
+#         system.time(feature_selection_model <- select_feature(rfdata))
+#     }else{
+#         feature_selection_model = readRDS("./cache/feature_selection_model.RDS")
+#     }
+
+# print(feature_selection_model)
+# plot(feature_selection_model,type = c('o','g'))
+
+source("./creative/select_feature.r")
+source("./creative/getSamples2.r")
+source("./creative/getSamples3.R")
+source("./creative/getSamples4.R")
+
+#rfdata = getSample4(corps_with_eff)
+feature_selection_results = list()
+for(ind in 1:5)
+{
+        rfdata = getSamples4(corps_with_eff)
+        feature_selection_model <- select_feature(rfdata)
+        tmp = list()
+        tmp$optVariables = feature_selection_model$optVariables
+        tmp$optsize = feature_selection_model$optsize
+        
+        feature_selection_results[[ind]] = tmp
+}
+
+optvariables_list = lapply(X = feature_selection_results,function(x){x[[1]]})
+
+optvariables = do.call(cbind,optvariables_list)
+
+vars5 = lapply(optvariables_list,function(x)x[1:5])
+vars10 = lapply(optvariables_list,function(x)x[1:10])
+top5vars = Reduce(dplyr::intersect,vars5)
+top10vars = Reduce(dplyr::intersect,vars10)
+
+
+
+
+```
+
+
+It is shown that every variable do contribute to the predition accuracy, and DEA efficiency rank the 6th. for simplicity, we choose the first 3, 5, 10 most important variables, explore the difference of accuracy using a variaty of machine learning methods. 
+
+
+
+```{r machine_learning2,echo = FALSE}
+source("./creative/mytrain.R")
+results5DF = mytrain(num_vars = top5vars,rfdata = rfdata)
+results10DF = mytrain(num_vars = top10vars,rfdata = rfdata)
+```
+
+
+
+
+
+```{r machinelearning,echo = FALSE}
+top3vars = feature_selection_model$optVariables[1:3]
+top5vars = feature_selection_model$optVariables[1:5]
+top10vars = feature_selection_model$optVariables[1:10]
+
+source("./creative/myRandomForest.R")
+source("./creative/mysvm.r")
+source("./creative/myNaiveBayes.r")
+
+
+# randomForest3vars = myRandomForest(num_vars = top3vars,rfdata)
+# randomForest5vars = myRandomForest(num_vars = top5vars,rfdata)
+# randomForest10vars = myRandomForest(num_vars = top10vars,rfdata)
+
+
+###Random Forest
+
+if(!file.exists("./cache/randomForest3vars.RDS"))
+{
+    randomForest3vars = myRandomForest(num_vars = top3vars,rfdata)
+    saveRDS(randomForest3vars,"./cache/randomForest3vars.RDS")
+}else{
+    randomForest3vars = readRDS("./cache/randomForest3vars.RDS")
+}
+
+if(!file.exists("./cache/randomForest5vars.RDS"))
+{
+    randomForest5vars = myrandomForest(num_vars = top5vars,rfdata)
+    saveRDS(randomForest5vars,"./cache/randomForest5vars.RDS")
+}else{
+    randomForest5vars = readRDS("./cache/randomForest5vars.RDS")
+}
+
+if(!file.exists("./cache/randomForest10vars.RDS"))
+{
+    randomForest10vars = myrandomForest(num_vars = top10vars,rfdata)
+    saveRDS(randomForest10vars,"./cache/randomForest10vars.RDS")
+}else{
+    randomForest10vars = readRDS("./cache/randomForest10vars.RDS")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##########           SVM          #########                                  
+if(!file.exists("./cache/SVM3vars.RDS"))
+{
+    SVM3vars = mySVM(num_vars = top3vars,rfdata)
+    saveRDS(SVM3vars,"./cache/SVM3vars.RDS")
+}else{
+    SVM3vars = readRDS("./cache/SVM3vars.RDS")
+}
+
+if(!file.exists("./cache/SVM5vars.RDS"))
+{
+    SVM5vars = mySVM(num_vars = top5vars,rfdata)
+    saveRDS(SVM5vars,"./cache/SVM5vars.RDS")
+}else{
+    SVM5vars = readRDS("./cache/SVM5vars.RDS")
+}
+
+if(!file.exists("./cache/SVM10vars.RDS"))
+{
+    SVM10vars = mySVM(num_vars = top10vars,rfdata)
+    saveRDS(SVM10vars,"./cache/SVM10vars.RDS")
+}else{
+    SVM10vars = readRDS("./cache/SVM10vars.RDS")
+}
+
+
+####NaiveBayes#######################################################
+if(!file.exists("./cache/NaiveBayes3vars.RDS"))
+{
+    NaiveBayes3vars = myNaiveBayes(num_vars = top3vars,rfdata)
+    saveRDS(NaiveBayes3vars,"./cache/NaiveBayes3vars.RDS")
+}else{
+    NaiveBayes3vars = readRDS("./cache/NaiveBayes3vars.RDS")
+}
+
+if(!file.exists("./cache/NaiveBayes5vars.RDS"))
+{
+    NaiveBayes5vars = myNaiveBayes(num_vars = top5vars,rfdata)
+    saveRDS(NaiveBayes5vars,"./cache/NaiveBayes5vars.RDS")
+}else{
+    NaiveBayes5vars = readRDS("./cache/NaiveBayes5vars.RDS")
+}
+
+
+if(!file.exists("./cache/NaiveBayes10vars.RDS"))
+{
+    NaiveBayes10vars = myNaiveBayes(num_vars = top10vars,rfdata)
+    saveRDS(NaiveBayes10vars,"./cache/NaiveBayes10vars.RDS")
+}else{
+    NaiveBayes10vars = readRDS("./cache/NaiveBayes10vars.RDS")
+}
+
+resultTable = matrix(0,ncol=2,nrow=9)
+resultTable[1,1] = randomForest3vars$Without_eff$Accuracy
+resultTable[1,2] = randomForest3vars$With_eff$Accuracy
+resultTable[2,1] = randomForest5vars$Without_eff$Accuracy
+resultTable[2,2] = randomForest5vars$With_eff$Accuracy
+resultTable[3,1] = randomForest10vars$Without_eff$Accuracy
+resultTable[3,2] = randomForest10vars$With_eff$Accuracy
+
+
+resultTable[4,1] = SVM3vars$Without_eff$Accuracy
+resultTable[4,2] = SVM3vars$With_eff$Accuracy
+resultTable[5,1] = SVM5vars$Without_eff$Accuracy
+resultTable[5,2] = SVM5vars$With_eff$Accuracy
+resultTable[6,1] = SVM10vars$Without_eff$Accuracy
+resultTable[6,2] = SVM10vars$With_eff$Accuracy
+
+
+resultTable[7,1] = NaiveBayes3vars$Without_eff$Accuracy
+resultTable[7,2] = NaiveBayes3vars$With_eff$Accuracy
+resultTable[8,1] = NaiveBayes5vars$Without_eff$Accuracy
+resultTable[8,2] = NaiveBayes5vars$With_eff$Accuracy
+resultTable[9,1] = NaiveBayes10vars$Without_eff$Accuracy
+resultTable[9,2] = NaiveBayes10vars$With_eff$Accuracy
+
+resultTable = as.data.frame(resultTable)
+
+rownames(resultTable) = c(paste0("randomForest",c(3,5,10),"vars"),
+                          paste0("SVM",c(3,5,10),"vars"),
+                          paste0("NaiveBayes",c(3,5,10),"vars"))
+colnames(resultTable) = c("accuracy_without_eff","accuracy_with_eff")
+
+print(resultTable)
+
+```
+
+```{r,echo=FALSE}
+
+
+# 
+# 
+# 
+# ## 由于ST企业共计只有64个，且不平衡分类比较困难
+# ## 故本程序取得ST与非ST企业64个
+# ## 计算DEA效率
+# ## 把效率作为一个feature，辅助分类与预测
+# require(dplyr)
+# #取得08-12年的公司，这些公司2年后将被撤销ST
+# Cancel_ST_Corp = all_data %>%
+#     inner_join(CancelST_data)
+# # 奇怪的是，有些公司会在同一年被实施和撤销ST
+# # 注意这些公司的label要在year+2年份找
+# corp_Imp_cancel_same_year = with(Cancel_ST_Corp,Cancel_ST_Corp[Would_be_ST==Would_be_CanceledST,])
+# corp_Imp_cancel_same_year[,c("Stkcd","year","Would_be_ST","Would_be_CanceledST")]
+# ##要把这些公司从数据集中去掉
+# Cancel_ST_Corp = Cancel_ST_Corp %>%
+#     filter( !(Stkcd %in% corp_Imp_cancel_same_year[,"Stkcd"]) )
+# 
+# build_model_data = all_data %>%
+#     filter(year >=2008 & year <=2011 &
+#             !(Stkcd %in% corp_Imp_cancel_same_year[,"Stkcd"]))
+#     
+# 
+# 
+# 
+# ST_corp = build_model_data %>%
+#     filter(Would_be_ST == "YES")
+# 
+# set.seed(12345)
+# NST_corp = build_model_data %>%
+#     filter(Would_be_ST == "NO") %>%
+#     sample_n(size = nrow(ST_corp))
+# 
+# ## 得到平衡样本（ST与非ST各64个）
+# mysample = rbind(ST_corp,NST_corp)
+# 
+# # source("./src/DEA.R")
+# # eff = CalculateDEAEfficiency(mysample[,4:12])
+# # mysample$efficiency = eff
+# mysample = mysample %>%
+#     select(-Stkcd,-year)
+# 
+# 
+# set.seed(3344)
+# trainIndex = sample(1:nrow(mysample),size = 0.8*nrow(mysample))
+# 
+# 
+# training = mysample[trainIndex,]
+# testing = mysample[-trainIndex,]
+
+```
+
+
+
+```{r importance_plot}
+# require(caret)
+# require(randomForest)
+# fit_rf = randomForest(Would_be_ST~.,data = training,importance = T)
+# pred_rf = predict(fit_rf,newdata = testing)
+# confusionMatrix(pred_rf,testing$Would_be_ST)
+# varImpPlot(fit_rf)
+# important_vars = importance(fit_rf,type = 1)
+# 
+
+
+```
+
+From the figure XX,we can see that the importance of variable **efficiency** is not that great.
+
+
+
+
+
+
+
+
+
+
+
+```{r ramdomforest,echo=FALSE}
+# require(caret)
+# require(randomForest)
+# fit.rf = randomForest(Would_be_ST~.,data = training,importance = T)
+# pred.rf = predict(fit.rf,newdata = testing)
+# confusionMatrix(pred.rf,testing$Would_be_ST)
+```
+
+```{r rf_no_eff,echo=FALSE}
+# require(caret)
+# require(randomForest)
+# fit_rf_no_eff = randomForest(Would_be_ST~.-efficiency,data = training,importance = T)
+# pred_rf_no_eff = predict(fit_rf_no_eff,newdata = testing)
+# confusionMatrix(pred_rf_no_eff,testing$Would_be_ST)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```{r svm,echo=FALSE}
+# require(caret)
+# fit_svm = train(Would_be_ST~.,data = training,preProcess = c("center","scale"),method="svmRadialCost",trControl = trainControl(method = "cv"))
+# pred_svm = predict(fit_svm,newdata = testing)
+# confusionMatrix(pred_svm,testing$Would_be_ST)
+```
+
+```{r mysvm,echo=FALSE}
+# source("./src/SVM.R")
+# 
+# SVM("Would_be_ST~.")
+# SVM("Would_be_ST~. - efficiency")
+
+```
+
+```{r roughset}
+# library(RoughSets)
+# decision_table = SF.asDecisionTable(mysample[,-c(1:12)],decision.attr=22,indx.nominal=22)
+# reduct_quick = FS.greedy.heuristic.reduct.RST(decision_table,decisionIdx=22,qualityF=X.entropy)
+# newDecTable2 = SF.applyDecTable(decision_table,reduct_quick)
+```
+## Conclusion
+
+
+
+
+
+
+
+
+## Reference
+1.  Breiman, Leo (2001). "Random Forests". Machine Learning 45 (1): 5–32. doi:10.1023/A:1010933404324.
+
+2. 

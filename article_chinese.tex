@@ -1,0 +1,121 @@
+\documentclass[]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+    \usepackage{xltxtra,xunicode}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+\usepackage[margin=1in]{geometry}
+\ifxetex
+  \usepackage[setpagesize=false, % page size defined by xetex
+              unicode=false, % unicode breaks when used with xetex
+              xetex]{hyperref}
+\else
+  \usepackage[unicode=true]{hyperref}
+\fi
+\hypersetup{breaklinks=true,
+            bookmarks=true,
+            pdfauthor={段永瑞},
+            pdftitle={考虑DEA效率的上市公司财务困境预测},
+            colorlinks=true,
+            citecolor=blue,
+            urlcolor=blue,
+            linkcolor=magenta,
+            pdfborder={0 0 0}}
+\urlstyle{same}  % don't use monospace font for urls
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\setcounter{secnumdepth}{5}
+
+\title{考虑DEA效率的上市公司财务困境预测}
+\author{段永瑞}
+\date{09/26/2014}
+\usepackage{ctex}
+
+\begin{document}
+
+\begin{center}
+\huge 考虑DEA效率的上市公司财务困境预测 \\[0.2cm]
+\end{center}
+\begin{center}
+\large \emph{段永瑞}\\[0.1cm]
+\end{center}
+\begin{center}
+\large \emph{09/26/2014} \\
+\end{center}
+\normalsize
+
+
+\subsection{引言}
+
+\subsection{文献综述}
+
+\subsubsection{数据包络分析}
+
+1978年Charnes, Cooper 和 Rhodes
+提出了数据包络分析方法(DEA)。由于该方法具有很多优势，例如，评价结果与量纲无关;其研究对象可以是多投入多产出的过程;不要求明确的生产函数等，DEA在各领域得到了广泛的应用。最初提出的是CCR模型，该模型要求投入产出均为正数，但是在现实生活中，产出可能是负数，例如利润。本文介绍一种修改过的SBM来解决此问题（Tone
+2004，Düzakin,E.,Düzakin,Hatice,2007）。 SBM是Tone
+2001提出的一种基于松弛变量来量度效率的方法，模型如下：
+
+\[
+    \begin{aligned}
+    \min & \rho=\frac{1-(1/m)\sum_{i=1}^{m}s_{i}^{-}/x_{io}}{1+(1/s)\sum_{r=1}^{s}s_{r}^{+}/y_{ro}}\\
+    \textrm{s.t.} & \mathbf{x_{o}}=\mathbf{X\lambda}+\mathbf{s^{-}}\\
+     & \mathbf{y_{o}}=\mathbf{Y\lambda}+\mathbf{s^{+}}\\
+     & \mathbf{\lambda}\geq\mathbf{0},\mathbf{s^{-}}\geq\mathbf{0},\mathbf{s^{+}}\geq\mathbf{0}
+    \end{aligned}
+\]
+
+同样的，该模型不能处理负产出。（Tone
+2004，Düzakin,E.,Düzakin,Hatice,2007）提出一个解决方法，假设$y_{ro}<0$，我们可以做如下变换：
+
+\[
+\begin{aligned}
+\overline{y}_{r}^{+} & =\textrm{Max}_{j=1,2,...n.}\{y_{rj}|y_{rj}>0\}\\
+\underline{y}_{r}^{-} & =\textrm{Min}_{j=1,2,...n.}\{y_{rj}|y_{rj}>0\}
+\end{aligned}
+\]
+
+我们用如下方法替换目标函数中的 $s_r^+/y_{ro}$ 项：如果 $y_{ro}<0$ ,且
+$\overline{y}_{r}^{+}>\underline{y}_{r}^{+}$,那么该项被替换为
+
+\[
+s_r^{+}/\frac{\underline{y}_{r}^{+}(\overline{y}_{r}^{+}-\underline{y}_{r}^{+})}{\overline{y}_{r}^{+}-y_{ro}}
+\]
+
+注意我们没有替换约束中的$y_{ro}$。
+
+经过这样的处理，可以使得所有的负产出均严格小于原最小正产出$\underline{y}_{r}^{+}$。且产出越负，其转换后的正值越小。
+\#\#\# 随机森林
+
+\subsubsection{支持向量机}
+
+\subsubsection{朴素贝叶斯}
+
+\subsection{结果讨论}
+
+\subsubsection{变量选择}
+
+\paragraph{DEA效率变量选择}\label{dea}
+
+\paragraph{预测数据变量选择}
+
+\subsubsection{}\label{section}
+
+\end{document}

@@ -1,0 +1,5 @@
+﻿#将文件存储在D:\GTA_R\目录下
+#将文件编码修改为UTF-8
+IDXCOMPO_1=read.delim("D:\\GTA_R\\FI_T6.txt",header=T)
+attach(IDXCOMPO_1)
+Accper=as.Date(Accper,format="%Y-%m-%d")

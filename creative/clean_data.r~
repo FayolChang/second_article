@@ -1,0 +1,147 @@
+clean_data <- function(feature_data,dea_data,ImplementST_data)
+{
+    
+    #本函数功能：
+    #1.合并年末数据：feature，dea， 并加ST标签
+    #2.去掉feature数据中的一些变量
+    
+    
+    require(lubridate)
+    require(dplyr)
+    require(caret)
+    
+    
+    ##去掉零方差，高度相关的列
+    process_pred_data = function(pred_data)
+    {
+        col_num_near_zero_var = nearZeroVar(pred_data)
+        if(length(col_num_near_zero_var) != 0)
+            pred_data = pred_data[,-col_num_near_zero_var]
+        
+        large_cor = findCorrelation(cor(pred_data),cutoff = 0.7)
+        
+        pred_data = pred_data[,-large_cor]
+        
+        combo = findLinearCombos(pred_data)
+        if(!is.null(combo$remove))
+            pred_data = pred_data[,-combo$remove]
+        
+        pred_data
+        
+    }
+    
+    get_positive_dea_data = function(dea_data)
+    {
+        stats = apply(dea_data,2,function(x) ifelse(min(x)<0,(min(x)-10^2),0))
+        dea_data_positive = sweep(dea_data,MARGIN = 2,stats)
+        dea_data_positive
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    #feature_data 数据，每年有4个分别为每个季度末
+    #我们这里只取年末的，即12-31
+    feature_data_1231 = feature_data %>%
+        filter(grepl("12-31",Accper)) %>%
+        mutate(year = year(Accper))
+    
+    #合并feature_data 和 dea数据
+    ML_DEA_data = dea_data %>% 
+        inner_join(feature_data_1231)
+    
+    
+    #   先选出每年的stkcd，unique
+    stkcd = ML_DEA_data %>%
+        mutate(year = as.factor(year)) %>%
+        group_by(year) %>%
+        select(Stkcd)
+    
+    ##
+    ##
+    ##
+    unique_stkcd = with(stkcd,tapply(Stkcd,year,unique))
+    #   因为要预测2年后是否会被ST，如08年的数据，就要预测11年是否被ST
+    #   所以我需要的企业代码要在08，09，10,11年中都存在
+    stkcd08to11 = Reduce(dplyr::intersect,unique_stkcd[1:4])
+    stkcd09to12 = Reduce(dplyr::intersect,unique_stkcd[2:5])
+    stkcd10to13 = Reduce(dplyr::intersect,unique_stkcd[3:6])
+    
+    #T-3年的数据
+    data2008 = ML_DEA_data %>%
+        filter(year == 2008,Stkcd %in% stkcd08to11)%>%
+        left_join(ImplementST_data) %>%
+        mutate(Would_be_ST = ifelse(is.na(Would_be_ST),"NO","YES")) %>%
+        mutate(Would_be_ST = as.factor(Would_be_ST))
+    
+    data2009 = ML_DEA_data %>%
+        filter(Accper == "2009-12-31",Stkcd %in% stkcd09to12)%>%
+        left_join(ImplementST_data) %>%
+        mutate(Would_be_ST = ifelse(is.na(Would_be_ST),"NO","YES")) %>%
+        mutate(Would_be_ST = as.factor(Would_be_ST))
+    
+    data2010 = ML_DEA_data %>%
+        filter(Accper == "2010-12-31",Stkcd %in% stkcd10to13)%>%
+        left_join(ImplementST_data) %>%
+        mutate(Would_be_ST = ifelse(is.na(Would_be_ST),"NO","YES")) %>%
+        mutate(Would_be_ST = as.factor(Would_be_ST))
+    
+    
+    merged_data = do.call(rbind,list(data2008,data2009,data2010))
+    merged_data = merged_data %>%
+        select(-Accper)
+    
+    
+    cols_with_manyNAs = colSums(is.na(merged_data))>1000
+    lessNA = merged_data[,!cols_with_manyNAs]
+    noNAs = lessNA[complete.cases(lessNA),]
+    
+    
+    
+    ## NoNAs中以A、B、C列开始的是用于计算DEA的，某些列的相关性很强
+    ## 分成2步骤：DEA和Pred：
+    ## DEA:负数->正数
+    ## Pred：去掉一些列
+    
+    dea_data = noNAs %>%
+        select(starts_with("A"),starts_with("B"),starts_with("C"))
+    
+    positive_dea_data = get_positive_dea_data(dea_data)
+    
+    
+    ## 下面用于筛选预测变量，筛去方差小的，相关性强的，多重共线性的
+    ## 也就是去掉一些列
+    pred_data = noNAs %>%
+        select( starts_with("T") )
+    
+    processed_pred_data = process_pred_data(pred_data)
+    
+    corps = cbind(Stkcd = noNAs$Stkcd,
+                               year = noNAs$year,
+                               positive_dea_data,
+                               pred_data,
+                               Would_be_ST=noNAs$Would_be_ST)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+}
+
