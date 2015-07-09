@@ -1,4 +1,4 @@
-mytrainv2 <- function(num_vars,rfdata,method)
+mytrainv2 <- function(num_vars,rfdata)
 {
     library(caret)
     
@@ -11,15 +11,18 @@ mytrainv2 <- function(num_vars,rfdata,method)
                              paste(c(num_vars[!var_eff],"eff"),collapse = "+"))
     
     formulae = c(formula_without_eff,formula_with_eff)
-    trainIndex = createDataPartition(rfdata$Would_be_ST,p=0.8,list = FALSE)
+    trainIndex = createDataPartition(rfdata$Would_be_ST,p=0.7,list = FALSE)
     
     train_data = rfdata[trainIndex,]
     test_data = rfdata[-trainIndex,]
     
+    
+    train_methods = c("svmRadial","svmLinear","rf","nb")
+    
     results = list()
     
-#     library(doMC)
-#     registerDoMC(4)
+    library(doMC)
+    registerDoMC(4)
     
     index = "Without_eff"
     for(formula in formulae)

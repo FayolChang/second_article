@@ -1,0 +1,15 @@
+\contentsline {subsection}{\numberline {0.1}Abstract}{1}{subsection.0.1}
+\contentsline {subsection}{\numberline {0.2}introduction}{1}{subsection.0.2}
+\contentsline {subsection}{\numberline {0.3}Literature Review}{1}{subsection.0.3}
+\contentsline {subsubsection}{\numberline {0.3.1}Data Envelopment Aanaysis(DEA)}{1}{subsubsection.0.3.1}
+\contentsline {subsubsection}{\numberline {0.3.2}Random Forest}{2}{subsubsection.0.3.2}
+\contentsline {paragraph}{\numberline {0.3.2.1}Bootstrap sample.}{2}{paragraph.0.3.2.1}
+\contentsline {paragraph}{\numberline {0.3.2.2}Growing trees.}{2}{paragraph.0.3.2.2}
+\contentsline {paragraph}{\numberline {0.3.2.3}OOB error estimate.}{2}{paragraph.0.3.2.3}
+\contentsline {subsubsection}{\numberline {0.3.3}SVM}{3}{subsubsection.0.3.3}
+\contentsline {subsection}{\numberline {0.4}Results and Discussion}{3}{subsection.0.4}
+\contentsline {subsubsection}{\numberline {0.4.1}The data}{3}{subsubsection.0.4.1}
+\contentsline {subsubsection}{\numberline {0.4.2}procedure}{3}{subsubsection.0.4.2}
+\contentsline {subsubsection}{\numberline {0.4.3}results}{3}{subsubsection.0.4.3}
+\contentsline {subsection}{\numberline {0.5}Conclusion}{5}{subsection.0.5}
+\contentsline {subsection}{\numberline {0.6}Reference}{5}{subsection.0.6}

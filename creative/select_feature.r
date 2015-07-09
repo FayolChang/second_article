@@ -1,7 +1,8 @@
 select_feature <-function(rfdata)
 {
     #library(randomForest)
-    #library(dplyr)
+    library(plyr)
+    library(dplyr)
     library(caret)
 
     rfdata = as.data.frame(rfdata)
@@ -20,7 +21,7 @@ select_feature <-function(rfdata)
 
     subsize = c(2:9,seq(from = 10,to = ncol(X),by = 5))
     library(doMC)
-    registerDoMC(cores = 4)
+    registerDoMC(cores = 6)
 
     set.seed(1234)
     rf2 = rfe(X,y,

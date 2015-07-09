@@ -1,0 +1,1136 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass article
+\begin_preamble
+\usepackage{ifxetex}
+\usepackage{ifluatex}\usepackage{fixltx2e}% provides \textsubscript
+% Set line spacing
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+\usepackage{xltxtra}
+\usepackage{xunicode}\else
+    \fi
+  \defaultfontfeatures{Mapping=tex-text,Scale=MatchLowercase}
+  \newcommand{\euro}{€}
+\fi
+% use microtype if available
+\IfFileExists{microtype.sty}{\usepackage{microtype}}{}
+% Redefine \includegraphics so that, unless explicit options are
+% given, the image width will not exceed the width of the page.
+% Images get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+
+\def\ScaleIfNeeded{%
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+
+\let\Oldincludegraphics\includegraphics
+{%
+ \catcode`\@=11\relax%
+ \gdef\includegraphics{\@ifnextchar[{\Oldincludegraphics}{\Oldincludegraphics[width=\ScaleIfNeeded]}}%
+}%
+\ifxetex
+  \else
+  \fi
+
+\urlstyle{same}  % don't use monospace font for urls
+
+
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+
+
+%%% Change title format to be more compact
+\usepackage{titling}
+\setlength{\droptitle}{-2em}
+  \title{Hybrid of DEA and Randomforest to predict corporation's financial
+failure}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Yongrui Duan, Fayou Zhang}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{09/26/2014}
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language english
+\language_package none
+\inputencoding utf8
+\fontencoding T1
+\font_roman lmodern
+\font_sans default
+\font_typewriter lmodern
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_title "Hybrid of DEA and Randomforest to predict corporation's financial failure"
+\pdf_author "Yongrui Duan, Fayou Zhang"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref section
+\pdf_pdfusetitle false
+\pdf_quoted_options "setpagesize=false,unicode=false,xetex,citecolor=blue,urlcolor=blue,linkcolor=magenta"
+\papersize default
+\use_geometry true
+\use_package amsmath 2
+\use_package amssymb 2
+\use_package cancel 0
+\use_package esint 1
+\use_package mathdots 0
+\use_package mathtools 0
+\use_package mhchem 0
+\use_package stackrel 0
+\use_package stmaryrd 0
+\use_package undertilde 0
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 5
+\tocdepth 3
+\paragraph_separation skip
+\defskip 6pt
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+maketitle
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+hypersetup
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+linkcolor=black
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{tocdepth}{2}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsection
+Abstract
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "abstract"
+
+\end_inset
+
+ The prediction of business failure is of great importance and has been
+ studied for decades.
+ While It is acknowledged that the efficiency of a corporation is crucial
+ to its success/failure, it is natural to include efficiency as a feature
+ to predict whether a corportaion would expericence business failure.
+ Together with financial ratios, features that affect most the prediction
+ of business failure were identified.
+ Based on these features selected, a variety of machine learning methods
+ were tested.
+ The results showed that efficiency did help improving the accuracy of predictio
+n.
+ Besides, to handle negative output, A modified SBM DEA model was adopted.
+\end_layout
+
+\begin_layout Subsection
+introduction
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "introduction"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Business failure prediction is crutial for investors, stock holders, managers,
+ employees and government officials, and thus has been an hot topic in academic
+ studies(
+\begin_inset CommandInset citation
+LatexCommand cite
+key "altman1968financial"
+
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Standard
+Many technical methods have been applied to predict business failure.
+ Amoung which are XX categories: XX, XX, XX, and XX.
+ XX(author) made an thorough review on XX.
+\end_layout
+
+\begin_layout Subsection
+Literature Review
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "literature-review"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+Data Envelopment Aanaysis(DEA)
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "data-envelopment-aanaysisdea"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+DEA is a nonparametric method proposed by Charnes, Cooper and Rhodes in
+ 1978.
+ it has been applied to many fileds Because of its many advantages: it does
+ not require any assumptions to be made about the distribution of inefficiency
+ and it does not require a particular functional form on the data in determining
+ the froniter.
+ it is capable of being used with any input-output measurement, and capable
+ of handling multiple inputs and outputs.
+ The CCR model requires inputs and outputs to be positive, which may be
+ not applied in real life.
+ for example, profits as an output may be negative.
+ In this paper, we will introduce a modified SBM model (Tone 2004，Düzakin,E.,Düza
+kin,Hatice,2007) to tackle this problem.
+ The SBM model is as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\min & \rho=\frac{1-(1/m)\sum_{i=1}^{m}s_{i}^{-}/x_{io}}{1+(1/s)\sum_{r=1}^{s}s_{r}^{+}/y_{ro}}\\
+\textrm{s.t.} & \mathbf{x_{o}}=\mathbf{X\lambda}+\mathbf{s^{-}}\\
+ & \mathbf{y_{o}}=\mathbf{Y\lambda}+\mathbf{s^{+}}\\
+ & \mathbf{\lambda}\geq\mathbf{0},\mathbf{s^{-}}\geq\mathbf{0},\mathbf{s^{+}}\geq\mathbf{0}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+However, this model can not handle negative output.（Tone 2004，Düzakin,E.,Düzakin,H
+atice,2007）proposed an solution to this problem.
+ Assuming 
+\begin_inset Formula $y_{ro}<0$
+\end_inset
+
+, following transformations were applied:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\overline{y}_{r}^{+} & =\textrm{Max}_{j=1,2,...n.}\{y_{rj}|y_{rj}>0\}\\
+\underline{y}_{r}^{-} & =\textrm{Min}_{j=1,2,...n.}\{y_{rj}|y_{rj}>0\}
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The term 
+\begin_inset Formula $s_{r}^{+}/y_{ro}$
+\end_inset
+
+ in the objective function as replaced as follows：if 
+\begin_inset Formula $y_{ro}<0$
+\end_inset
+
+ ,and 
+\begin_inset Formula $\overline{y}_{r}^{+}>\underline{y}_{r}^{+}$
+\end_inset
+
+,then it will be replaced with
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+s_{r}^{+}/\frac{\underline{y}_{r}^{+}(\overline{y}_{r}^{+}-\underline{y}_{r}^{+})}{\overline{y}_{r}^{+}-y_{ro}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that the term 
+\begin_inset Formula $y_{ro}$
+\end_inset
+
+ are not replaced in the constraint.
+\end_layout
+
+\begin_layout Standard
+After transformation, all negaitve output were transformed to be positive
+ and strictly less than 
+\begin_inset Formula $\underline{y}_{r}^{+}$
+\end_inset
+
+ .
+ and the more negative an output is, the less its tranformation value.
+\end_layout
+
+\begin_layout Subsubsection
+Random Forest
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "random-forest"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Random forest, developed by Leo Breiman(1) and Adele Cutler(2), is an ensemble
+ learning method for classification and regression that operate by constructing
+ a multitude of decision trees.
+ For a given training dataset, 
+\begin_inset Formula $A={(X_{1},y_{1}),(X_{2},y_{2}),\cdots,(X_{n},y_{n})}$
+\end_inset
+
+,Where 
+\begin_inset Formula $X_{i}=1,2,\cdots,n$
+\end_inset
+
+, is a variable or vector and 
+\begin_inset Formula $y_{i}$
+\end_inset
+
+ is its corresponding property or class label; the basic RF algorithm is
+ presented as follows:
+\end_layout
+
+\begin_layout Paragraph
+Bootstrap sample.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "bootstrap-sample."
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Each training set is drawn with replacement from the original dataset A.
+ Bootstrapping allows replacement, so that some of the samples will be repeated
+ in the sample, while others will be 
+\begin_inset Quotes eld
+\end_inset
+
+left out
+\begin_inset Quotes erd
+\end_inset
+
+ of the sample.
+ The 
+\begin_inset Quotes eld
+\end_inset
+
+left out
+\begin_inset Quotes erd
+\end_inset
+
+ samples constitute the 
+\begin_inset Quotes eld
+\end_inset
+
+Out-of bag (OOB)
+\begin_inset Quotes erd
+\end_inset
+
+ which has, for example, one-third, of samples in A which are used later
+ to get a running unbiased estimate of the classification error as trees
+ are added to the forest and variable imp ortance
+\end_layout
+
+\begin_layout Paragraph
+Growing trees.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "growing-trees."
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For each bootstrap sample, a tree is grown m variables 
+\begin_inset Formula $(m_{try})$
+\end_inset
+
+ are selected at random from all n variables 
+\begin_inset Formula $(m_{try}\leq n)$
+\end_inset
+
+ and the best split of all 
+\begin_inset Formula $(m_{try})$
+\end_inset
+
+ is used at each node.
+ Each tree is grown to the largest extent (until no further splitting is
+ possible) and no pruning of the trees occurs.
+\end_layout
+
+\begin_layout Paragraph
+OOB error estimate.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "oob-error-estimate."
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Each tree is constructed on the bootstrap sample.
+ The OOB samples are not used and therefore regarded as a test set to provide
+ an unbiased estimate of the prediction accuracy.
+ Each OOB sample is put down the constructed trees to get a classification.
+ A test set classification is formed.
+ At the end of the run, take k to be the class which got most of the 
+\begin_inset Quotes eld
+\end_inset
+
+votes
+\begin_inset Quotes erd
+\end_inset
+
+ every time sample n was OOB.
+ The proportion of times that k is not the true class of n averaged over
+ all samples is the OOB error estimate.
+\end_layout
+
+\begin_layout Subsubsection
+SVM
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "svm"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Support vector machines(SVM) is the theory based on statistical learning
+ theory.
+ It realizes the theory of VC dimension and principle of structural risk
+ minimum(SRM).
+ The idea of SVM is to search an optimal hyper-plane :TODO:
+\end_layout
+
+\begin_layout Standard
+Suppose we are given a set of training data 
+\begin_inset Formula $xi\in R^{n}(i=1,2,…,n)$
+\end_inset
+
+ with the desired output 
+\begin_inset Formula $yi∈{+1,-1}$
+\end_inset
+
+ corresponding to the two classes.
+ And suppose the dataset is linear seperable.
+ So there exists a separating hyper plane with the target functions w·xi+b=0
+ (w represents the weight vector and b represents the bias).
+ To ensure that all training data can be classified, we must make the margin
+ of separation 
+\begin_inset Formula $(2/‖w‖)$
+\end_inset
+
+ maximum.
+ Then, in the case of linear separation, the linear SVM for optimal separating
+ hyper plane has the following optimization problem.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\max & \frac{2}{||w||}\\
+\text{s.t.} & y^{(i)}(w^{T}x^{(i)}+b)\geq1,i=1,\cdots,n
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+the model above can be transformed as:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\begin{aligned}\min & \frac{1}{2}||w||^{2}\\
+\text{s.t.} & y^{(i)}(w^{T}x^{(i)}+b)\geq1,i=1,\cdots,n
+\end{aligned}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Results and Discussion
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "results-and-discussion"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsubsection
+The data
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "the-data"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Our aim is to predict whether a company would experience financial failure
+ in two years after based on the financial statement data of current year.
+ The data are from XXXX.
+ We collected data from 2004 to 2013 but only use 2004-2010 for prediction.
+ for example, we obtain data of a company in its 2010 financial statement
+ and this company was classifed as special treatment(ST*) in 2013 for the
+ first time.
+ we pair the data in 2010 and the label ST in 2013 together to build our
+ model.
+ Once the model was built, we can predict wether a specific company will
+ be classified as special treatment two years after.
+\end_layout
+
+\begin_layout Subsubsection
+procedure
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "procedure"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+First, we calculate DEA efficiency of the corperations in each year, and
+ use the efficiency as a feature.
+ Second, we caluclate viarable importance through random forests.
+ third, we build our models using the 5 most important variables.
+ When building our models, we randmonly select 200 nonST corperatons and
+ resample ST corperations to 200 to make the two classes (i.e.
+\begin_inset space ~
+\end_inset
+
+ST and Non-ST) balance.
+ forth, we randomly divide the 400 sample into training set and testing
+ set.
+ fifth, we use the training set to train different models.
+ sixth, we compared these models.
+\end_layout
+
+\begin_layout Subsubsection
+results
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "results"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The results shows that efficiency is an important factor in predicting whether
+ a corporation would be classified as ST.
+\end_layout
+
+\begin_layout Standard
+T-test was performed to test whether the average efficiencies of the two
+ classes were different.
+ The results showed that in each year, the average efficiencies were different
+ in the two groups.
+ The average efficiencies of Non-ST corporations were greater than those
+ of ST corportations, which indictated that efficiencies did affect whether
+ a corporation would be classified ST.
+\end_layout
+
+\begin_layout Verbatim
+##   year         t       df mean in group NO mean in group YES      p.value
+\end_layout
+
+\begin_layout Verbatim
+## 1 2004  6.289462 79.48763        0.1867667        0.06452167 1.614410e-08
+\end_layout
+
+\begin_layout Verbatim
+## 2 2005  9.104105 46.25286        0.1641083        0.04398829 7.014893e-12
+\end_layout
+
+\begin_layout Verbatim
+## 3 2006  2.419709 27.69179        0.1779674        0.08574585 2.235514e-02
+\end_layout
+
+\begin_layout Verbatim
+## 4 2007  2.995092 61.91787        0.1357489        0.06027207 3.941019e-03
+\end_layout
+
+\begin_layout Verbatim
+## 5 2008  8.257729 21.22337        0.1393429        0.02695048 4.556909e-08
+\end_layout
+
+\begin_layout Verbatim
+## 6 2009 16.951634 79.10053        0.1698880        0.01851906 4.660759e-28
+\end_layout
+
+\begin_layout Verbatim
+## 7 2010  7.926714 25.88826        0.1705648        0.02631009 2.166611e-08
+\end_layout
+
+\begin_layout Standard
+Together with efficiency, there are other 47 finacial ratios in our data
+ sets.
+ However, not all of the variables are useful for prediction.
+ To reduce model complexity, we used random forest to select the variables
+ that has the most importance.
+ First, all the ST corporations are selected, and the same size of Non-ST
+ corporations are randomly sampled from Non-ST group.
+ Then based on the selected data, feature importances will be calculated
+ using the rfe function in the caret package.
+ Because the Non-ST data was randomly sampled, feature importances maybe
+ different according to different Non-ST data.
+ In viewing of this, the feature selection was performed 20 times, variables
+ that appears in all the 20 times and in top 5 of each time would be eligible
+ to be chosen.
+ Finally we got 4 variables: eff, F070101B, F092601B, F050202B.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+begin{figure}[htbp]
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+includegraphics{article_files/figure-latex/plot_variable_importance-1.pdf}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+end{figure}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement htbp
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename article_files/figure-latex/plot_variable_importance-2.pdf
+	width 50text%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Importance of top 10 variables
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "varimp"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement htbp
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Graphics
+	filename article_files/figure-latex/plot_feature_selection-1.pdf
+	width 50text%
+
+\end_inset
+
+ 
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+best number of variables for prediction
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "feature_selection"
+
+\end_inset
+
+ 
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+It is shown that although the best number of variables is 25 for the predition,
+ however, the top 5 or 10 contribute most to the predition accuracy.
+ for simplicity, we choose the top 5 most important variables, explore the
+ difference of accuracy using a variaty of machine learning methods.
+ Table 1 shows the results of predicting accuracy using different machine
+ learning methods with and without the feature of DEA efficiency.
+ The accuracy would be improved with the efficiency, with an increase ranging
+ from 1% to 6.5%.
+ In each of the machine learning method, a variety of parameters were tested
+ to obtain the best performance.
+ 
+\end_layout
+
+\begin_layout Verbatim
+##      method Accuracy_without_eff Accuracy_with_eff
+\end_layout
+
+\begin_layout Verbatim
+## 1 svmLinear            0.6357143         0.7071429
+\end_layout
+
+\begin_layout Verbatim
+## 2        rf            0.6571429         0.6857143
+\end_layout
+
+\begin_layout Verbatim
+## 3        nb            0.7142857         0.7428571
+\end_layout
+
+\begin_layout Verbatim
+## 4      C5.0            0.7571429         0.7714286
+\end_layout
+
+\begin_layout Verbatim
+## 5       gbm            0.7428571         0.7500000
+\end_layout
+
+\begin_layout Verbatim
+## 6       glm            0.6857143         0.7071429
+\end_layout
+
+\begin_layout Verbatim
+## 7  multinom            0.6857143         0.7071429
+\end_layout
+
+\begin_layout Subsection
+Conclusion
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "conclusion"
+
+\end_inset
+
+ To improve the prediction accuracy of business failure, The data from 2004-2010
+ was collected and examined.
+ It was found that ST corporations had average lower efficiency than those
+ Non-ST corporations.
+ DEA efficiency was introduced and the results showed that efficiency did
+ provide valuable information for better accuracy.
+ Amoung the 7 prediction models, C5.0 had the best performance.
+\end_layout
+
+\begin_layout Subsection
+Reference
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset label
+LatexCommand label
+name "reference"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "library.bib"
+options "default"
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+begin{enumerate}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+def
+\backslash
+labelenumi{
+\backslash
+arabic{enumi}.}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+item
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%  Breiman, Leo (2001).
+ ``Random Forests''.
+ Machine Learning 45 (1):
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%  5--32.
+ 
+\backslash
+url{doi:10.1023/A:1010933404324}.
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+item
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+%
+\backslash
+end{enumerate}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

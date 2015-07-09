@@ -4,6 +4,7 @@
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
 \usepackage{fixltx2e} % provides \textsubscript
+% Set line spacing
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
@@ -21,29 +22,25 @@
 % use microtype if available
 \IfFileExists{microtype.sty}{\usepackage{microtype}}{}
 \usepackage[margin=1in]{geometry}
-\usepackage{color}
-\usepackage{fancyvrb}
-\newcommand{\VerbBar}{|}
-\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
-\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
-% Add ',fontsize=\small' for more characters per line
-\usepackage{framed}
-\definecolor{shadecolor}{RGB}{248,248,248}
-\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
-\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
-\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
-\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
-\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
-\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
-\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
-\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
-\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
-\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
-\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
-\newcommand{\RegionMarkerTok}[1]{{#1}}
-\newcommand{\ErrorTok}[1]{\textbf{{#1}}}
-\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx}
+% Redefine \includegraphics so that, unless explicit options are
+% given, the image width will not exceed the width of the page.
+% Images get their normal width if they fit onto the page, but
+% are scaled down if they would overflow the margins.
+\makeatletter
+\def\ScaleIfNeeded{%
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+\let\Oldincludegraphics\includegraphics
+{%
+ \catcode`\@=11\relax%
+ \gdef\includegraphics{\@ifnextchar[{\Oldincludegraphics}{\Oldincludegraphics[width=\ScaleIfNeeded]}}%
+}%
 \ifxetex
   \usepackage[setpagesize=false, % page size defined by xetex
               unicode=false, % unicode breaks when used with xetex
@@ -54,7 +51,7 @@
 \hypersetup{breaklinks=true,
             bookmarks=true,
             pdfauthor={Yongrui Duan, Fayou Zhang},
-            pdftitle={Hybrid of DEA and Randomforest to predict shangshigongsi cai wu kun jing},
+            pdftitle={Hybrid of DEA and Randomforest to predict corporation's financial failure},
             colorlinks=true,
             citecolor=blue,
             urlcolor=blue,
@@ -66,25 +63,40 @@
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \setcounter{secnumdepth}{5}
 
-\title{Hybrid of DEA and Randomforest to predict shangshigongsi cai wu kun jing}
-\author{Yongrui Duan, Fayou Zhang}
-\date{09/26/2014}
+%%% Change title format to be more compact
+\usepackage{titling}
+\setlength{\droptitle}{-2em}
+  \title{Hybrid of DEA and Randomforest to predict corporation's financial
+failure}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Yongrui Duan, Fayou Zhang}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{09/26/2014}
+
+
+
 
 \begin{document}
 
-\begin{center}
-\huge Hybrid of DEA and Randomforest to predict shangshigongsi cai wu kun jing \\[0.2cm]
-\end{center}
-\begin{center}
-\large \emph{Yongrui Duan, Fayou Zhang}\\[0.1cm]
-\end{center}
-\begin{center}
-\large \emph{09/26/2014} \\
-\end{center}
-\normalsize
+\maketitle
 
 
+{
+\hypersetup{linkcolor=black}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
 \subsection{Abstract}\label{abstract}
+The prediction of business failure is of great importance and has been studied
+for decades. While It is acknowledged that the efficiency of a corporation is crucial to its success/failure,
+it is natural to include efficiency as a feature to predict whether a corportaion would expericence business failure.
+Together with financial ratios, features that affect most the prediction of  business failure were identified. Based on these
+features selected, a variety of machine learning methods were tested. The results showed that efficiency did help improving the accuracy of 
+prediction. Besides, to handle negative output, A modified SBM DEA model was adopted.
 
 \subsection{introduction}\label{introduction}
 
@@ -223,8 +235,8 @@ the model above can be transformed as:
 
 Our aim is to predict whether a company would experience financial
 failure in two years after based on the financial statement data of
-current year. The data are from XXXX. We collected data from 2008 to
-2013 but only use 2008-2010 for prediction. for example, we obtain data
+current year. The data are from XXXX. We collected data from 2004 to
+2013 but only use 2004-2010 for prediction. for example, we obtain data
 of a company in its 2010 financial statement and this company was
 classifed as special treatment(ST*) in 2013 for the first time. we pair
 the data in 2010 and the label ST in 2013 together to build our model.
@@ -233,113 +245,99 @@ be classified as special treatment two years after.
 
 \subsubsection{procedure}\label{procedure}
 
-First, we calculate DEA efficiency of the corperations in each year,an d
+First, we calculate DEA efficiency of the corperations in each year, and
 use the efficiency as a feature. Second, we caluclate viarable
 importance through random forests. third, we build our models using the
-3,5,10 most important variables. When building our models, we randmonly
+5 most important variables. When building our models, we randmonly
 select 200 nonST corperatons and resample ST corperations to 200 to make
-two class balance. forth, we randomly divide the 400 sample into
-training set and testing set. fifth, we use the training set to train
-different models. sixth, we compared these models.
+the two classes (i.e.~ST and Non-ST) balance. forth, we randomly divide
+the 400 sample into training set and testing set. fifth, we use the
+training set to train different models. sixth, we compared these models.
 
 \subsubsection{results}\label{results}
 
-The results shows that efficiency is an relatively important factor in
-predicting ST
+The results shows that efficiency is an important factor in predicting
+whether a corporation would be classified as ST.
+
+
+T-test was performed to test whether the average efficiencies of the two
+classes were different. The results showed that in each year, the
+average efficiencies were different in the two groups. The average
+efficiencies of Non-ST corporations were greater than those of ST
+corportations, which indictated that efficiencies did affect whether a
+corporation would be classified ST.
 
 \begin{verbatim}
-## 
-## Recursive feature selection
-## 
-## Outer resampling method: Bootstrapped (25 reps) 
-## 
-## Resampling performance over subset size:
-## 
-##  Variables Accuracy Kappa AccuracySD KappaSD Selected
-##          2    0.962 0.924    0.01074  0.0214         
-##          3    0.965 0.930    0.00761  0.0152         
-##          4    0.960 0.920    0.01056  0.0210         
-##          5    0.963 0.925    0.01088  0.0217         
-##          6    0.964 0.928    0.01168  0.0233         
-##          7    0.966 0.932    0.00996  0.0199         
-##          8    0.968 0.937    0.01052  0.0210         
-##          9    0.967 0.935    0.01022  0.0204         
-##         10    0.969 0.939    0.00964  0.0193         
-##         11    0.970 0.939    0.01008  0.0201         
-##         12    0.970 0.941    0.00960  0.0192         
-##         13    0.970 0.940    0.00955  0.0191         
-##         14    0.970 0.941    0.01049  0.0209         
-##         15    0.971 0.942    0.00974  0.0194         
-##         16    0.970 0.941    0.00951  0.0190         
-##         17    0.971 0.943    0.00905  0.0181         
-##         18    0.971 0.941    0.01007  0.0201         
-##         19    0.972 0.943    0.00937  0.0187         
-##         20    0.972 0.944    0.00944  0.0188         
-##         21    0.972 0.945    0.00988  0.0197         
-##         22    0.974 0.947    0.00957  0.0191         
-##         23    0.974 0.948    0.00975  0.0195         
-##         24    0.975 0.951    0.00839  0.0167         
-##         25    0.975 0.951    0.00747  0.0149         
-##         26    0.975 0.951    0.00767  0.0153         
-##         27    0.976 0.952    0.00754  0.0151        *
-## 
-## The top 5 variables (out of 27):
-##    T60800, T70600, T40402, T10300, T80403
+##   year         t       df mean in group NO mean in group YES      p.value
+## 1 2004  6.289462 79.48763        0.1867667        0.06452167 1.614410e-08
+## 2 2005  9.104105 46.25286        0.1641083        0.04398829 7.014893e-12
+## 3 2006  2.419709 27.69179        0.1779674        0.08574585 2.235514e-02
+## 4 2007  2.995092 61.91787        0.1357489        0.06027207 3.941019e-03
+## 5 2008  8.257729 21.22337        0.1393429        0.02695048 4.556909e-08
+## 6 2009 16.951634 79.10053        0.1698880        0.01851906 4.660759e-28
+## 7 2010  7.926714 25.88826        0.1705648        0.02631009 2.166611e-08
 \end{verbatim}
 
-It is shown that every variable do contribute to the predition accuracy,
-and DEA efficiency rank the 6th. for simplicity, we choose the first 3,
-5, 10 most important variables, explore the difference of accuracy using
+Together with efficiency, there are other 47 finacial ratios in our data
+sets. However, not all of the variables are useful for prediction. To
+reduce model complexity, we used random forest to select the variables
+that has the most importance. First, all the ST corporations are
+selected, and the same size of Non-ST corporations are randomly sampled
+from Non-ST group. Then based on the selected data, feature importances
+will be calculated using the rfe function in the caret package. Because
+the Non-ST data was randomly sampled, feature importances maybe
+different according to different Non-ST data. In viewing of this, the
+feature selection was performed 20 times, variables that appears in all
+the 20 times and in top 5 of each time would be eligible to be chosen.
+Finally we got 4 variables: eff, F070101B, F092601B, F050202B.
+
+
+%\begin{figure}[htbp]
+%\includegraphics{article_files/figure-latex/plot_variable_importance-1.pdf}
+%\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width = 0.5\textwidth]{article_files/figure-latex/plot_variable_importance-2.pdf}
+\caption{Importance of top 10 variables}\label{varimp}
+\end{figure}
+
+
+\begin{figure}[htbp]
+\centering
+\includegraphics[width = 0.5\textwidth]{article_files/figure-latex/plot_feature_selection-1.pdf}
+\caption{best number of variables for prediction}\label{feature_selection}
+\end{figure}
+It is shown that although the best number of  variables is 25 for the predition, however, the top 5 or 10 contribute most to the predition accuracy. for simplicity, we choose the top
+5 most important variables, explore the difference of accuracy using
 a variaty of machine learning methods.
-
+Table 1 shows the results of predicting accuracy using different machine learning methods with and without the feature of DEA efficiency. The accuracy would be improved with the efficiency, with an increase ranging from 1\% to 6.5\%. In each of the machine learning method, a variety of parameters were tested to obtain the best performance. 
 \begin{verbatim}
-##                    accuracy_without_eff accuracy_with_eff
-## randomForest3vars                0.9750            0.9750
-## randomForest5vars                0.9708            0.9667
-## randomForest10vars               0.9708            0.9750
-## SVM3vars                         0.9917            0.9875
-## SVM5vars                         1.0000            1.0000
-## SVM10vars                        1.0000            1.0000
-## NaiveBayes3vars                  0.8208            0.8208
-## NaiveBayes5vars                  0.8667            0.8375
-## NaiveBayes10vars                 0.8542            0.8625
+##      method Accuracy_without_eff Accuracy_with_eff
+## 1 svmLinear            0.6357143         0.7071429
+## 2        rf            0.6571429         0.6857143
+## 3        nb            0.7142857         0.7428571
+## 4      C5.0            0.7571429         0.7714286
+## 5       gbm            0.7428571         0.7500000
+## 6       glm            0.6857143         0.7071429
+## 7  multinom            0.6857143         0.7071429
 \end{verbatim}
 
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# require(caret)}
-\CommentTok{# require(randomForest)}
-\CommentTok{# fit_rf = randomForest(Would_be_ST~.,data = training,importance = T)}
-\CommentTok{# pred_rf = predict(fit_rf,newdata = testing)}
-\CommentTok{# confusionMatrix(pred_rf,testing$Would_be_ST)}
-\CommentTok{# varImpPlot(fit_rf)}
-\CommentTok{# important_vars = importance(fit_rf,type = 1)}
-\CommentTok{# }
-\end{Highlighting}
-\end{Shaded}
-
-From the figure XX,we can see that the importance of variable
-\textbf{efficiency} is not that great.
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\CommentTok{# library(RoughSets)}
-\CommentTok{# decision_table = SF.asDecisionTable(mysample[,-c(1:12)],decision.attr=22,indx.nominal=22)}
-\CommentTok{# reduct_quick = FS.greedy.heuristic.reduct.RST(decision_table,decisionIdx=22,qualityF=X.entropy)}
-\CommentTok{# newDecTable2 = SF.applyDecTable(decision_table,reduct_quick)}
-\end{Highlighting}
-\end{Shaded}
 
 \subsection{Conclusion}\label{conclusion}
+To improve the prediction accuracy of business failure, The data from 2004-2010 was collected and examined. It was found that ST corporations had average lower efficiency than those Non-ST corporations. DEA efficiency was introduced and the results showed that efficiency did provide valuable information for better accuracy. Amoung the 7 prediction models, C5.0 had the best performance.
+
+
 
 \subsection{Reference}\label{reference}
 
-\begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  Breiman, Leo (2001). ``Random Forests''. Machine Learning 45 (1):
-  5--32. \url{doi:10.1023/A:1010933404324}.
-\item
-\end{enumerate}
+\bibliography{library.bib}
+%\begin{enumerate}
+%\def\labelenumi{\arabic{enumi}.}
+%\item
+%  Breiman, Leo (2001). ``Random Forests''. Machine Learning 45 (1):
+%  5--32. \url{doi:10.1023/A:1010933404324}.
+%\item
+%\end{enumerate}
 
 \end{document}
